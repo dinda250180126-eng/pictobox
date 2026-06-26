@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PictoBox Photobooth</title>
+    <style>
+        /* Mengatur tampilan dasar agar rapi dan estetik */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        .header p {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        .content {
+            max-width: 600px;
+            width: 90%;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .paket-box {
+            background-color: #f8f9fa;
+            border-left: 5px solid #6c5ce7;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+        }
+        .paket-box h3 {
+            margin-top: 0;
+            color: #6c5ce7;
+        }
+        .kalkulator {
+            border: 2px dashed #a29bfe;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+        .total-box {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .total-box h2 {
+            margin: 5px 0;
+            color: #0d47a1;
+        }
+        .btn-wa {
+            display: block;
+            text-align: center;
+            background-color: #25D366;
+            color: white;
+            padding: 12px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background 0.3s;
+        }
+        .btn-wa:hover {
+            background-color: #1ebd54;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bagian Atas / Banner Website -->
+    <div class="header">
+        <h1>PictoBox Photobooth</h1>
+        <p>"Mencetak memori indah bersama PictoBox"</p>
+    </div>
+
+    <!-- Bagian Konten Utama -->
+    <div class="content">
+        
+        <!-- Info Paket Utama -->
+        <div class="paket-box">
+            <h3>🎁 Paket Seru (Self-Photo Session)</h3>
+            <p><strong>Harga Dasar:</strong> Rp 35.000</p>
+            <ul>
+                <li>⏱️ Sesi foto sepuasnya selama 10 menit</li>
+                <li>📸 Mendapatkan 2 lembar foto cetak</li>
+                <li>🎭 Properti foto lucu gratis</li>
+            </ul>
+            <p><small>*Ingin tambah cetak? Hanya <strong>+Rp 5.000 / lembar</strong> berikutnya!</small></p>
+        </div>
+
+        <!-- Fitur Kalkulator Otomatis Interaktif -->
+        <div class="kalkulator">
+            <label for="jumlah_foto">Hitung Estimasi Harga:</label>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 0;">Masukkan total lembar foto cetak yang kamu inginkan:</p>
+            <input type="number" id="jumlah_foto" value="2" min="2" oninput="hitungHarga()">
+
+            <div class="total-box">
+                <span>Total Bayar:</span>
+                <h2 id="total_harga">Rp 35.000</h2>
+                <small style="color: #666;">(Sudah termasuk sesi foto 10 menit)</small>
+            </div>
+            
+            <!-- Ganti nomor di bawah dengan nomor WhatsApp kamu jika diperlukan -->
+            <a id="btn_wa" href="https://wa.me/628123456789?text=Halo%20PictoBox" target="_blank" class="btn-wa">Pesan Lewat WhatsApp</a>
+        </div>
+
+    </div>
+
+    <!-- Logika Matematika Web (Sistem Informasi) -->
+    <script>
+        function hitungHarga() {
+            var inputFoto = document.getElementById("jumlah_foto").value;
+            var totalHarga = 35000;
+            
+            // Logika matematika: paket dasar dapat 2 lembar. 
+            // Jika lebih dari 2 lembar, sisa lembarnya dikali 5000.
+            if (inputFoto > 2) {
+                var lembarTambahan = inputFoto - 2;
+                totalHarga = 35000 + (lembarTambahan * 5000);
+            } else {
+                // Mengunci agar input tidak bisa di bawah 2 lembar paket dasar
+                document.getElementById("jumlah_foto").value = 2;
+                totalHarga = 35000;
+                inputFoto = 2;
+            }
+            
+            // Update teks harga di layar web
+            document.getElementById("total_harga").innerHTML = "Rp " + totalHarga.toLocaleString('id-ID');
+            
+            // Siapkan draf pesan otomatis untuk dikirim ke WhatsApp admin
+            var teksWA = "Halo PictoBox, saya ingin memesan paket foto dengan total cetak " + inputFoto + " lembar. (Total Estimasi: Rp " + totalHarga.toLocaleString('id-ID') + ").";
+            document.getElementById("btn_wa").href = "https://wa.me/628123456789?text=" + encodeURIComponent(teksWA);
+        }
+        
+        // Menjalankan fungsi sekali di awal agar link WA langsung terisi draf dasar
+        hitungHarga();
+    </script>
+
+</body>
+</html>
